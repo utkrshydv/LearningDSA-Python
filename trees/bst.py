@@ -33,6 +33,32 @@ def inOrder(root):
     inOrder(root.left)
     print(root.value, end = " ")
     inOrder(root.right)
+    
+def get_successor(root):
+  root = root.right
+  while root!=None and root.left != None:
+    root = root.left
+  return root
+ 
+def delete(root, value):
+  if root==None:
+    return root
+  if root.value > value:
+    root.left = delete(root.left, value)
+  elif root.value < value:
+    root.right = delete(root.right, value)
+  else:
+    if root.left == None: 
+      return root.right
+    if root.right == None:
+      return root.left
+    else:
+      succ = get_successor(root) 
+      root.value = succ.value
+      root.right = delete(root.right, succ.value)
+  return root 
+
+
 
 root = Node(20)
 root.left = Node(15)
